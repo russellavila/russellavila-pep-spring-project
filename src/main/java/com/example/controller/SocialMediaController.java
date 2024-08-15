@@ -1,5 +1,4 @@
 package com.example.controller;
-import com.example.service.*;
 import com.example.repository.*;
 import com.example.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import com.example.service.MessageService;
+import com.example.service.AccountService;
+import com.example.repository.AccountRepository;
 import java.util.List;
 
 
@@ -16,24 +18,28 @@ import java.util.List;
  * where applicable as well as the @ResponseBody and @PathVariable annotations. You should
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
-@Controller
+@RestController
 public class SocialMediaController {
 
     private final AccountService accountService;
-    private final MessageService messageService;
+    //private final MessageService messageService;
 
     @Autowired
-    public SocialMediaController(AccountService accountService, MessageService messageService){
+    public SocialMediaController(AccountService accountService){
         this.accountService = accountService;
-        this.messageService = messageService;
+        //this.messageService = messageService;
     }
-
+    /* 
     @PostMapping("/register")
-    public Account createAccount(@RequestBody Account account){
-        Account createdAccount = accountService.createAccount(account);
-        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
+    public @ResponseBody ResponseEntity<Account> saveAccount(@RequestParam Integer accountId, @RequestParam String username, @RequestParam String password){
+        Account newAccount = accountService.saveAccount(new Account(accountId, username, password));
+        return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
     }
-
-
-
+     */
+    
+     @RequestMapping(value = "/register", produces = "application/json")
+     public @ResponseBody ResponseEntity<Account> saveAccount(@RequestParam Integer accountId, @RequestParam String username, @RequestParam String password){
+        Account newAccount = accountService.saveAccount(new Account(accountId, username, password));
+        return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
+    }
 }
