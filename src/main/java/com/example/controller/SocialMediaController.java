@@ -1,4 +1,13 @@
 package com.example.controller;
+import com.example.service.*;
+import com.example.repository.*;
+import com.example.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 
 /**
@@ -7,6 +16,24 @@ package com.example.controller;
  * where applicable as well as the @ResponseBody and @PathVariable annotations. You should
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
+@Controller
 public class SocialMediaController {
+
+    private final AccountService accountService;
+    private final MessageService messageService;
+
+    @Autowired
+    public SocialMediaController(AccountService accountService, MessageService messageService){
+        this.accountService = accountService;
+        this.messageService = messageService;
+    }
+
+    @PostMapping("/register")
+    public Account createAccount(@RequestBody Account account){
+        Account createdAccount = accountService.createAccount(account);
+        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
+    }
+
+
 
 }
