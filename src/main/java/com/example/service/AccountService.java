@@ -8,15 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 public class AccountService {
 
-    private final AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     public AccountService(AccountRepository accountRepository){
         this.accountRepository = accountRepository;
     }
 
-    public Account saveAccount(Account account) {
-        return accountRepository.save(account);
+    public Account addNewAccount(Account newAccount) {
+        return accountRepository.save(newAccount);
+    }
+
+    public List<Account> getAccountList() {
+        return (List<Account>) accountRepository.findAll();
     }
 
 }

@@ -30,16 +30,15 @@ public class SocialMediaController {
         this.messageService = messageService;
     }
     /* 
-    @PostMapping("/register")
-    public @ResponseBody ResponseEntity<Account> saveAccount(@RequestParam Integer accountId, @RequestParam String username, @RequestParam String password){
-        Account newAccount = accountService.saveAccount(new Account(accountId, username, password));
-        return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
-    }
-     */
-    
      @RequestMapping(value = "/register", produces = "application/json")
      public @ResponseBody ResponseEntity<Account> saveAccount(@RequestParam Integer accountId, @RequestParam String username, @RequestParam String password){
         Account newAccount = accountService.saveAccount(new Account(accountId, username, password));
         return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
     }
+        */
+
+    @GetMapping("/messages")
+    List<Message> all() {
+        return messageService.getMessageList();
+    }    
 }
