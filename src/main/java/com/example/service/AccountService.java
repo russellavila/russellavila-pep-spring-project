@@ -15,7 +15,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account addNewAccount(Account newAccount) {
+    public Account addAccount(Account newAccount) {
         return accountRepository.save(newAccount);
     }
 

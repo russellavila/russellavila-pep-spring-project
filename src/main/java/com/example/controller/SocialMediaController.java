@@ -29,13 +29,11 @@ public class SocialMediaController {
         this.accountService = accountService;
         this.messageService = messageService;
     }
-    /* 
-     @RequestMapping(value = "/register", produces = "application/json")
-     public @ResponseBody ResponseEntity<Account> saveAccount(@RequestParam Integer accountId, @RequestParam String username, @RequestParam String password){
-        Account newAccount = accountService.saveAccount(new Account(accountId, username, password));
-        return new ResponseEntity<Account>(newAccount, HttpStatus.CREATED);
-    }
-        */
+
+    @PostMapping("/register")
+    Account newAccount(@RequestBody Account newAccount) {
+        return accountService.addAccount(newAccount);
+    }    
 
     @GetMapping("/messages")
     List<Message> allMessages() {
