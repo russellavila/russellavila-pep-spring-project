@@ -38,7 +38,12 @@ public class SocialMediaController {
         */
 
     @GetMapping("/messages")
-    List<Message> all() {
+    List<Message> allMessages() {
         return messageService.getMessageList();
-    }    
+    }
+    
+    @GetMapping("/messages/{messageId}")
+    Message getMessageById(@PathVariable Integer messageId) {
+      return messageService.findMessage(messageId);
+    }
 }
