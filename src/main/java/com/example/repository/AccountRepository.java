@@ -17,12 +17,3 @@ import java.io.Serializable;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Optional<Account> findByUsernameAndPassword(String username, String password);
 }
-
-/*
- * 
- * @Repository
-public interface AssociateRepository extends CrudRepository<Student, Serializable> {
-
-    @Query("select a from Associate a where a.name = :name")
-    List<Associate> findByName(@Param("name") String name);
- */

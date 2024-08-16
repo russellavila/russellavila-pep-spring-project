@@ -19,6 +19,10 @@ public class AccountService {
         return accountRepository.save(newAccount);
     }
 
+    public Account loginAccount(String username, String password){
+        return accountRepository.findByUsernameAndPassword(username, password).orElse(null);
+    }
+
     public List<Account> getAccountList() {
         return (List<Account>) accountRepository.findAll();
     }

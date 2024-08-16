@@ -31,8 +31,14 @@ public class SocialMediaController {
     }
 
     @PostMapping("/register")
-    Account newAccount(@RequestBody Account newAccount) {
-        return accountService.addAccount(newAccount);
+    ResponseEntity <Account> newAccount(@RequestBody Account newAccount) {
+        if ((newAccount.getUsername() == "")||(newAccount.getPassword().length()<4)){
+            return ResponseEntity.status(400).body(null);
+        }
+        if (accountService.loginAccount(newAccount.getUsername(), newAccount.getPassword()) != null){
+            return ResponseEntity.status(409).body(null);
+        }
+        return ResponseEntity.ok(accountService.addAccount(newAccount));
     }    
 
     @GetMapping("/messages")
@@ -43,5 +49,16 @@ public class SocialMediaController {
     @GetMapping("/messages/{messageId}")
     Message getMessageById(@PathVariable Integer messageId) {
       return messageService.findMessage(messageId);
+    }
+
+    @PostMapping("/login")
+    ResponseEntity<Account> getLogin(@RequestBody Account login) {
+        ResponseEntity<Account> nj = ResponseEntity.ok(accountService.loginAccount(login.getUsername(), login.getPassword()));
+
+        if (nj.hasBody() == false){
+            return ResponseEntity.status(401).body(null);
+        }
+        
+        return ResponseEntity.ok(accountService.loginAccount(login.getUsername(), login.getPassword()));
     }
 }
