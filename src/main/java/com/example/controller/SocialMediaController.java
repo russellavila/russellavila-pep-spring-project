@@ -22,12 +22,12 @@ import java.util.List;
 public class SocialMediaController {
 
     private final AccountService accountService;
-    //private final MessageService messageService;
+    private final MessageService messageService;
 
     @Autowired
-    public SocialMediaController(AccountService accountService){
+    public SocialMediaController(AccountService accountService, MessageService messageService){
         this.accountService = accountService;
-        //this.messageService = messageService;
+        this.messageService = messageService;
     }
     /* 
     @PostMapping("/register")
