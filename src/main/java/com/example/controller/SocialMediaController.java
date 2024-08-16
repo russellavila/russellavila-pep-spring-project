@@ -39,7 +39,15 @@ public class SocialMediaController {
             return ResponseEntity.status(409).body(null);
         }
         return ResponseEntity.ok(accountService.addAccount(newAccount));
-    }    
+    }
+    
+    @PostMapping("/messages")
+    ResponseEntity <Message> newMessage(@RequestBody Message newMessage) {
+        if ((newMessage.getMessageText() == "")||(newMessage.getMessageText().length()>255)){
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.ok(messageService.addNewMessage(newMessage));
+    } 
 
     @GetMapping("/messages")
     List<Message> allMessages() {
@@ -58,7 +66,7 @@ public class SocialMediaController {
         if (nj.hasBody() == false){
             return ResponseEntity.status(401).body(null);
         }
-        
+
         return ResponseEntity.ok(accountService.loginAccount(login.getUsername(), login.getPassword()));
     }
 }
