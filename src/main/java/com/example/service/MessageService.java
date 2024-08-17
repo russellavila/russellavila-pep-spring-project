@@ -31,4 +31,17 @@ public class MessageService {
     public Message findMessage(int messageId){
         return messageRepository.findById(messageId).orElse(null);
     }
+
+    public Message patchMessage (int messageId, String messageText){
+        Message message = messageRepository.findById(messageId).orElse(null);
+        message.setMessageText(messageText);
+        return messageRepository.save(message);
+    }
+
+    public long deleteMessage(int messageId){
+        long x = messageRepository.count();
+        messageRepository.deleteById(messageId);
+        long y = messageRepository.count();
+        return x-y;
+    }
 }

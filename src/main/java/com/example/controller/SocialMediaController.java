@@ -69,4 +69,19 @@ public class SocialMediaController {
 
         return ResponseEntity.ok(accountService.loginAccount(login.getUsername(), login.getPassword()));
     }
+
+    @PatchMapping("/messages/{messageId}")
+    ResponseEntity<Message> patchMessage(@RequestParam() Integer messageId, @RequestHeader String messageText){
+        return ResponseEntity.ok(messageService.patchMessage(messageId, messageText));
+    }
+
+    @DeleteMapping("/messages/{messageId}")
+    ResponseEntity<Long> deleteMessage(@PathVariable Integer messageId){
+        ResponseEntity<Message> checkMessage = ResponseEntity.ok(messageService.findMessage(messageId));
+        if(checkMessage.hasBody() == false){
+            return null;
+        }
+
+        return ResponseEntity.ok(messageService.deleteMessage(messageId));
+    }
 }
