@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.service.MessageService;
 import com.example.service.AccountService;
 import com.example.repository.AccountRepository;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -46,8 +47,20 @@ public class SocialMediaController {
         if ((newMessage.getMessageText() == "")||(newMessage.getMessageText().length()>255)){
             return ResponseEntity.status(400).body(null);
         }
+        if (getAccount(newMessage.getPostedBy()).hasBody() == false){
+            return ResponseEntity.status(400).body(null);
+        }
         return ResponseEntity.ok(messageService.addNewMessage(newMessage));
-    } 
+    }
+    
+    @GetMapping("/accounts/{accountId}")
+    ResponseEntity<Account> getAccount(@PathVariable Integer postedBy){
+       ResponseEntity<Account> check = ResponseEntity.ok(accountService.accountById(postedBy));
+        if (check.hasBody() == false){
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.ok(accountService.accountById(postedBy));
+    }
 
     @GetMapping("/messages")
     List<Message> allMessages() {
@@ -84,4 +97,10 @@ public class SocialMediaController {
 
         return ResponseEntity.ok(messageService.deleteMessage(messageId));
     }
+
+    @GetMapping("/accounts/{accountId}/messages")
+    List <Message> allMessagesByAccountId(@PathVariable Integer accountId){
+        return messageService.getMessagesByAccountId(accountId);
+    }
+    
 }

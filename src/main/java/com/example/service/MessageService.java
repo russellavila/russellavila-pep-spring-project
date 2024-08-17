@@ -3,6 +3,7 @@ import com.example.entity.*;
 import com.example.exception.ResourceNotFoundException;
 
 import java.util.List;
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.repository.MessageRepository;
@@ -43,5 +44,9 @@ public class MessageService {
         messageRepository.deleteById(messageId);
         long y = messageRepository.count();
         return x-y;
+    }
+
+    public List<Message> getMessagesByAccountId(int postedBy){
+        return messageRepository.findAllMessagesByPostedBy(postedBy);
     }
 }

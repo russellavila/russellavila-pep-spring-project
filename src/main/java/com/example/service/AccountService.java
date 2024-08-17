@@ -23,6 +23,10 @@ public class AccountService {
         return accountRepository.findByUsernameAndPassword(username, password).orElse(null);
     }
 
+    public Account accountById(Integer accountId){
+        return accountRepository.findByAccountId(accountId).orElse(null);
+    }
+
     public List<Account> getAccountList() {
         return (List<Account>) accountRepository.findAll();
     }

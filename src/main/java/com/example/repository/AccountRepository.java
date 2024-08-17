@@ -16,4 +16,5 @@ import java.io.Serializable;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Optional<Account> findByUsernameAndPassword(String username, String password);
+    Optional<Account> findByAccountId(Integer accountId);
 }
