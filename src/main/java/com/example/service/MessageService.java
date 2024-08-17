@@ -1,9 +1,6 @@
 package com.example.service;
 import com.example.entity.*;
-import com.example.exception.ResourceNotFoundException;
-
 import java.util.List;
-import java.util.Collection;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.repository.MessageRepository;
@@ -31,11 +28,12 @@ public class MessageService {
         return messageRepository.findById(messageId).orElse(null);
     }
 
-    public Message patchMessage (int messageId, String messageText){
+    public int patchMessage (int messageId, String newMessege){
         Message message = messageRepository.findById(messageId).orElse(null);
-        message.setMessageText(messageText);
-        return messageRepository.save(message);
-    }
+        message.setMessageText(newMessege);
+        messageRepository.save(message);
+        return 1;
+    } 
 
     public long deleteMessage(int messageId){
         long x = messageRepository.count();

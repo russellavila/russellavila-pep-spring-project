@@ -12,7 +12,6 @@ import com.example.repository.AccountRepository;
 import java.util.Collection;
 import java.util.List;
 
-
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
  * found in readme.md as well as the test cases. You be required to use the @GET/POST/PUT/DELETE/etc Mapping annotations
@@ -84,8 +83,20 @@ public class SocialMediaController {
     }
 
     @PatchMapping("/messages/{messageId}")
-    ResponseEntity<Message> patchMessage(@RequestParam() Integer messageId, @RequestHeader String messageText){
-        return ResponseEntity.ok(messageService.patchMessage(messageId, messageText));
+    ResponseEntity<Integer> patchMessage(@PathVariable int messageId, @RequestBody Message messageText){
+        ResponseEntity<Message> nj = ResponseEntity.ok(messageService.findMessage(messageId));
+
+        if ((messageText.getMessageText().length()>255)){
+            return ResponseEntity.status(400).body(null);
+        }
+        if (messageText.getMessageText().isBlank()){
+            return ResponseEntity.status(400).body(null);
+        }
+        
+        if (nj.hasBody() == false){
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.ok(messageService.patchMessage(messageId, messageText.getMessageText()));
     }
 
     @DeleteMapping("/messages/{messageId}")
